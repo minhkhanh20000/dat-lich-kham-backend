@@ -5,11 +5,14 @@ const getChoDatLichService = async (req, res) => {
   const data = [];
   const listMaND = [];
   try {
+    console.log('render');
+
     const [rows, fields] = await pool.execute(
       `SELECT COUNT(maThoiGian) as count,  thoiGianBatDau, thoiGianKetThuc, maThoiGian, maND
       from tbldangkylichkham, tblthoigianlamviec
       WHERE tblthoigianlamviec.maTG = tbldangkylichkham.maThoiGian and thoiGianDky = '${ngayDatLich}' GROUP by maThoiGian`
     );
+
     const selector = (maTG) => `SELECT maND
     from tbldangkylichkham, tblthoigianlamviec
     WHERE tblthoigianlamviec.maTG = tbldangkylichkham.maThoiGian and thoiGianDky = '${ngayDatLich}' and tbldangkylichkham.maThoiGian= '${maTG}' `;
@@ -20,10 +23,13 @@ const getChoDatLichService = async (req, res) => {
       data.push({ ...rows[index], maND: result });
     }
 
+    console.log(data);
+
     return res.status(200).json({
       data: data,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       message: 'Lỗi khi lấy số chỗ',
     });
