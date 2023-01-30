@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const { innitAPIRoute } = require('./routes/routers');
+const { innitAPIRoute } = require('./src/routes/routers');
 
 const app = express();
 const port = 5000;
@@ -20,7 +20,7 @@ app.use(
     extended: true,
   })
 );
-
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
