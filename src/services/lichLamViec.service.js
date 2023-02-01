@@ -58,7 +58,7 @@ const getLichLamViecService = async (req, res) => {
 const getAllLichLamViecService = async (req, res) => {
   try {
     const [rows, field] = await pool.execute(
-      'SELECT * from tbllichlamviec, tblnguoidung where tbllichlamviec.maND = tblnguoidung.maND and thang=1'
+      'SELECT * from tbllichlamviec, tblnguoidung,tblbacsi, tblkhoa where tbllichlamviec.maND = tblnguoidung.maND and tblbacsi.maND = tblnguoidung.maND and tblkhoa.maKhoa = tblbacsi.maKhoa'
     );
     return res.status(200).json({
       message: 'Get lịch làm việc thành công',
@@ -73,8 +73,8 @@ const getAllLichLamViecService = async (req, res) => {
 const acceptLichLamViecService = async (req, res) => {
   try {
     const [rows, field] = await pool.execute(
-      'UPDATE tbllichlamviec set trangThai=? where maND=?',
-      [req.params.trangThai, req.params.maND]
+      'UPDATE tbllichlamviec set trangThai=? where maND=? and thang=?',
+      [req.params.trangThai, req.params.maND, req.params.thang]
     );
     return res.status(200).json({
       message: 'Cập nhật lịch thành công',
@@ -89,6 +89,7 @@ const acceptLichLamViecService = async (req, res) => {
 
 const getLichLamViecByMonthService = async (req, res) => {
   const { thang, maND } = req.query;
+  console.log(req.query);
   try {
     const [rows, field] = await pool.execute(
       'select * from tbllichlamviec where thang=? and maND=?',

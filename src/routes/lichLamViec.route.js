@@ -14,7 +14,10 @@ function lichLamViecApi(router) {
   router.get(`/get-all-lich-lam-viec-user`, getAllLichLamViecController);
   router.get(`/get-lich-lam-viec-month`, getLichLamViecByMonthController);
 
-  router.put(`/accept-calender/:maND/:trangThai`, acceptLichLamViecController);
+  router.put(
+    `/accept-calender/:maND/:trangThai/:thang`,
+    acceptLichLamViecController
+  );
 }
 
 module.exports = lichLamViecApi;
