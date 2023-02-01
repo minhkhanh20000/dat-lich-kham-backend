@@ -69,14 +69,15 @@ const postDatLichService = async (req, res) => {
     req.body;
   try {
     await pool.execute(
-      'INSERT INTO tbldangkylichkham(maND, maThoiGian, tinhTrangDangKy, thoiGianDKy, maKhoa, lyDo) VALUES (?,?,?,?,?,?)',
-      [maND, maThoiGian, tinhTrang, thoiGianDangKy, maKhoa, tinhTrangBenh]
+      'INSERT INTO tbldangkylichkham(maND, maThoiGian, tinhTrangDangKy, thoiGianDKy, maKhoa, lyDo,ghiChu) VALUES (?,?,?,?,?,?,?)',
+      [maND, maThoiGian, tinhTrang, thoiGianDangKy, maKhoa, tinhTrangBenh, '']
     );
     return res.status(200).json({
       status: 200,
       message: 'Đăng ký lịch khám thành công',
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       message: 'Đăng ký lịch khám không thành công',
     });

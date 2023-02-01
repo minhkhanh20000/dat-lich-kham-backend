@@ -7,8 +7,8 @@ const postLichLamViecService = async (req, res) => {
 
   try {
     await pool.execute(
-      'INSERT INTO tbllichlamviec(maLich, maND, thang, nam, lich) VALUES (?,?,?,?,?)',
-      [uniId, maND, thang, nam, lich]
+      'INSERT INTO tbllichlamviec(maLich, maND, thang, nam, lich,trangThai) VALUES (?,?,?,?,?,?)',
+      [uniId, maND, thang, nam, lich, 0]
     );
     return res.status(200).json({
       message: 'Thêm lịch làm việc thành công',
@@ -87,10 +87,29 @@ const acceptLichLamViecService = async (req, res) => {
   }
 };
 
+const getLichLamViecByMonthService = async (req, res) => {
+  const { thang, maND } = req.query;
+  try {
+    const [rows, field] = await pool.execute(
+      'select * from tbllichlamviec where thang=? and maND=?',
+      [thang, maND]
+    );
+    return res.status(200).json({
+      message: 'Get Success',
+      data: rows,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error,
+    });
+  }
+};
+
 module.exports = {
   postLichLamViecService,
   editLichLamViecService,
   getLichLamViecService,
   getAllLichLamViecService,
   acceptLichLamViecService,
+  getLichLamViecByMonthService,
 };

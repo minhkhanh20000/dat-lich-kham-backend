@@ -4,6 +4,7 @@ const {
   editLichLamViecService,
   getAllLichLamViecService,
   acceptLichLamViecService,
+  getLichLamViecByMonthService,
 } = require('../services/lichLamViec.service');
 
 const postLichLamViecController = async (req, res) => {
@@ -22,6 +23,9 @@ const getAllLichLamViecController = async (req, res) => {
 const acceptLichLamViecController = async (req, res) => {
   await acceptLichLamViecService(req, res);
 };
+const getLichLamViecByMonthController = async (req, res) => {
+  await getLichLamViecByMonthService(req, res);
+};
 
 module.exports = {
   postLichLamViecController,
@@ -29,4 +33,5 @@ module.exports = {
   editLichLamViecController,
   getAllLichLamViecController,
   acceptLichLamViecController,
+  getLichLamViecByMonthController,
 };

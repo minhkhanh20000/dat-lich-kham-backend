@@ -4,6 +4,7 @@ const {
   editLichLamViecController,
   getAllLichLamViecController,
   acceptLichLamViecController,
+  getLichLamViecByMonthController,
 } = require('../controllers/lichLamViec.controller');
 
 function lichLamViecApi(router) {
@@ -11,6 +12,8 @@ function lichLamViecApi(router) {
   router.put(`/edit-lich-lam-viec-user`, editLichLamViecController);
   router.get(`/get-lich-lam-viec-user`, getLichLamViecController);
   router.get(`/get-all-lich-lam-viec-user`, getAllLichLamViecController);
+  router.get(`/get-lich-lam-viec-month`, getLichLamViecByMonthController);
+
   router.put(`/accept-calender/:maND/:trangThai`, acceptLichLamViecController);
 }
 
