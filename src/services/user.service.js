@@ -138,13 +138,13 @@ const editProfileDoctor = async (req, res) => {
 
 const editProfileUserService = async (req, res) => {
   let { maND } = req.params;
-  const { hoTen, SDT, CMND, email, gioiTinh, diaChi, ngheNghiep, ngaySinh } =
+  const { hoTen, SDT, email, gioiTinh, ngheNghiep, ngaySinh } =
     req.body;
 
   try {
     await pool.execute(
-      'UPDATE tblnguoidung set ngaySinh= ?, hoTen = ?, SDT= ?, CMND= ?, email= ?, gioiTinh= ?, diaChi= ?, ngheNghiep= ? where maND = ?',
-      [ngaySinh, hoTen, SDT, CMND, email, gioiTinh, diaChi, ngheNghiep, maND]
+      'UPDATE tblnguoidung set ngaySinh= ?, hoTen = ?, SDT= ?, email= ?, gioiTinh= ?, ngheNghiep= ? where maND = ?',
+      [ngaySinh, hoTen, SDT, email, gioiTinh, ngheNghiep, maND]
     );
     const [rows, field] = await pool.execute(
       `select * from tblnguoidung where maND = '${maND}'`
