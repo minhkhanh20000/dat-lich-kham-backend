@@ -1,29 +1,26 @@
 const pool = require('../configs/connectDB');
 
 const getChoDatLichService = async (req, res) => {
-  const { ngayDatLich } = req.query;
+  const { ngayDatLich, maKhoa } = req.query;
+  console.log(maKhoa);
   const data = [];
   const listMaND = [];
   try {
-    console.log('render');
-
     const [rows, fields] = await pool.execute(
       `SELECT COUNT(maThoiGian) as count,  thoiGianBatDau, thoiGianKetThuc, maThoiGian, maND
       from tbldangkylichkham, tblthoigianlamviec
-      WHERE tblthoigianlamviec.maTG = tbldangkylichkham.maThoiGian and thoiGianDky = '${ngayDatLich}' GROUP by maThoiGian`
+      WHERE tblthoigianlamviec.maTG = tbldangkylichkham.maThoiGian and thoiGianDky = '${ngayDatLich}' and tbldangkylichkham.maKhoa = '${maKhoa}' GROUP by maThoiGian`
     );
 
     const selector = (maTG) => `SELECT maND
     from tbldangkylichkham, tblthoigianlamviec
-    WHERE tblthoigianlamviec.maTG = tbldangkylichkham.maThoiGian and thoiGianDky = '${ngayDatLich}' and tbldangkylichkham.maThoiGian= '${maTG}' `;
+    WHERE tblthoigianlamviec.maTG = tbldangkylichkham.maThoiGian and thoiGianDky = '${ngayDatLich}' and tbldangkylichkham.maThoiGian= '${maTG}' and tbldangkylichkham.maKhoa= '${maKhoa}'`;
 
     for (let index = 0; index < rows.length; index++) {
       const [res] = await pool.execute(selector(rows[index].maThoiGian));
       let result = res.map(({ maND }) => maND);
       data.push({ ...rows[index], maND: result });
     }
-
-    console.log(data);
 
     return res.status(200).json({
       data: data,
