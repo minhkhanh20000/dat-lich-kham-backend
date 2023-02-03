@@ -15,7 +15,7 @@ function lichLamViecApi(router) {
   router.get(`/get-lich-lam-viec-month`, getLichLamViecByMonthController);
 
   router.put(
-    `/accept-calender/:maND/:trangThai/:thang`,
+    `/accept-calender/:maND/:trangThai/:thang/:lydohuy`,
     acceptLichLamViecController
   );
 }

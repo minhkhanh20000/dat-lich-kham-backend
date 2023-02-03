@@ -1,12 +1,13 @@
 const pool = require('../configs/connectDB');
 const uniqid = require('uniqid');
+const { host } = require('../constants/host');
 
 const postBaiDangService = async (req, res) => {
   const { filename } = req.file;
   const { tieude, mota, maND, noidung } = req.body;
 
   const uniId = uniqid();
-  const image = `http://localhost:5000/${filename}`;
+  const image = `${host}/${filename}`;
   const ngaydang = new Date();
 
   try {
@@ -30,7 +31,7 @@ const eidtBaiDangService = async (req, res) => {
   const { tieude, mota, noidung, maND } = req.body;
   const { id } = req.params;
   if (req.file) {
-    const image = `http://localhost:5000/${req.file.filename}`;
+    const image = `${host}/${req.file.filename}`;
     try {
       await pool.execute(
         `UPDATE tblbaidang set tieude= ?, mota= ?, anh= ?, noidung= ? WHERE mabaidang= ? and maND= ?`,

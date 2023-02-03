@@ -20,12 +20,12 @@ const postLichLamViecService = async (req, res) => {
   }
 };
 const editLichLamViecService = async (req, res) => {
-  const { maND, thang, nam, lich } = req.body;
+  const { maND, thang, nam, lich, trangThai } = req.body;
 
   try {
     await pool.execute(
-      'Update tbllichlamviec set lich=? where maND=? and thang=? and nam=?',
-      [lich, maND, thang, nam]
+      'Update tbllichlamviec set lich=?, trangThai=? where maND=? and thang=? and nam=?',
+      [lich, trangThai, maND, thang, nam]
     );
     return res.status(200).json({
       message: 'Chỉnh sửa lịch làm việc thành công',
@@ -73,8 +73,13 @@ const getAllLichLamViecService = async (req, res) => {
 const acceptLichLamViecService = async (req, res) => {
   try {
     const [rows, field] = await pool.execute(
-      'UPDATE tbllichlamviec set trangThai=? where maND=? and thang=?',
-      [req.params.trangThai, req.params.maND, req.params.thang]
+      'UPDATE tbllichlamviec set trangThai=?, lydohuy=? where maND=? and thang=?',
+      [
+        req.params.trangThai,
+        req.params.lydohuy,
+        req.params.maND,
+        req.params.thang,
+      ]
     );
     return res.status(200).json({
       message: 'Cập nhật lịch thành công',
