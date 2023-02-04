@@ -2,7 +2,6 @@ const uniqid = require('uniqid');
 const pool = require('../configs/connectDB');
 const bcrypt = require('bcrypt');
 const e = require('express');
-const { host } = require('../constants/host');
 
 const saltRounds = 10;
 const registerService = async (body, res) => {
@@ -68,7 +67,7 @@ const addProfileDoctor = async (req, res) => {
   let { maND } = req.params;
   const { chuyenNganh, truongTotNghiep, kinhNghiem, lyLichCongTac, maKhoa } =
     req.body;
-  const image = `${host}/${filename}`;
+  const image = `https://dat-lich-kham.onrender.com/${filename}`;
 
   try {
     await pool.execute(
@@ -99,7 +98,7 @@ const editProfileDoctor = async (req, res) => {
 
   console.log(req.body);
   if (req.file) {
-    const image = `${host}/${req.file.filename}`;
+    const image = `https://dat-lich-kham.onrender.com/${req.file.filename}`;
     console.log(image);
     try {
       await pool.execute(
